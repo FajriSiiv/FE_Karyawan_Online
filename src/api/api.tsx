@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const apiUrl = axios.create({
-  baseURL: import.meta.env.BASE_BACKEND,
+  baseURL: import.meta.env.VITE_BASE_BASE_BACKEND,
   withCredentials: true,
 });
 
