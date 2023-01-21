@@ -56,7 +56,7 @@ export const TitleTable = ({ data }: { data: any }) => {
           </p>
         </Link>
         <p className="py-2 px-5 rounded-md bg-emerald-500 text-sm text-white cursor-default">
-          Max Karyawan [ {data}/10 ]
+          Max Karyawan [10]
         </p>
       </div>
     </div>
