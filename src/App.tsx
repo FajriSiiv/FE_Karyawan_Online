@@ -17,7 +17,7 @@ function App() {
         <DataTable
           columns={columns}
           data={karyawan}
-          title={<TitleTable data={karyawan} />}
+          title={<TitleTable data={karyawan.length} />}
           className="border-2 mt-5"
         />
       </div>
