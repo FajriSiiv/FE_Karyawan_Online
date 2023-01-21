@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addKaryawan } from "../api/api";
+import React, { useEffect, useState } from "react";
+import { json, useNavigate, useParams } from "react-router-dom";
+import { getKaryawanById, updateKaryawan } from "../api/api";
 import { NumericFormat } from "react-number-format";
 import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
-export default function AddKaryawan() {
+export default function editKaryawan() {
+  const { id } = useParams();
+
+  const [data, setData] = useState([]);
   const [namaKaryawan, setNamaKaryawan] = useState("");
   const [jabatan, setJabatan] = useState("");
   const [umur, setUmur] = useState("");
@@ -19,7 +23,8 @@ export default function AddKaryawan() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await addKaryawan({
+    await updateKaryawan({
+      ...data,
       nama_karyawan: namaKaryawan,
       jabatan: jabatan,
       umur: parseFloat(umur),
@@ -47,9 +52,29 @@ export default function AddKaryawan() {
       });
   };
 
+  useEffect(() => {
+    const dataById = async () => {
+      const data = await getKaryawanById(id);
+
+      const tanggalS = new Date(data.join_perusahaan);
+
+      setData(data);
+      setNamaKaryawan(data.nama_karyawan);
+      setUmur(data.umur);
+      setGaji(data.gaji);
+      setGender(data.gender);
+      setJabatan(data.jabatan);
+      setEmail(data.email);
+      setJoinPerusahaan(tanggalS);
+    };
+    dataById();
+  }, []);
+
   return (
     <div className="container mx-auto mt-5 pb-10">
-      <h1 className="text-4xl font-semibold text-center mb-5">Add Karyawan</h1>
+      <h1 className="text-4xl font-semibold text-center mb-5">
+        Edit Karyawan {namaKaryawan}
+      </h1>
       <form
         className="w-1/2 mx-auto flex flex-col gap-y-5 border-2 p-5 border-slate-500 rounded-md"
         onSubmit={handleSubmit}
@@ -142,7 +167,7 @@ export default function AddKaryawan() {
           type="submit"
           className="py-2 bg-emerald-500 rounded-md text-white"
         >
-          Add Karyawan
+          Simpan Perubahan
         </button>
       </form>
       <ToastContainer />

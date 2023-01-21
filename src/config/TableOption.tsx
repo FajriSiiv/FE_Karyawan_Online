@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import MenuDropdown from "../components/MenuDropdown";
+import { formatRupiah } from "../components/ReUsed";
+import moment from "moment";
 
 export const columns: any = [
   {
@@ -9,7 +11,7 @@ export const columns: any = [
   },
   {
     name: "Gaji",
-    selector: (row: any) => row.gaji,
+    selector: (row: any) => formatRupiah(row.gaji),
   },
   {
     name: "Jabatan",
@@ -23,7 +25,7 @@ export const columns: any = [
   },
   {
     name: "Join",
-    selector: (row: any) => row.join_perusahaan,
+    selector: (row: any) => moment(row.join_perusahaan).format("DD-MMM-YYYY"),
     width: "150px",
   },
 
@@ -38,7 +40,7 @@ export const columns: any = [
   },
   {
     name: "Action",
-    selector: () => <MenuDropdown />,
+    selector: (row: any) => <MenuDropdown idRow={row._id} />,
     center: true,
   },
 ];

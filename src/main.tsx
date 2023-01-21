@@ -6,6 +6,11 @@ import "./index.css";
 import axios from "axios";
 import Layout from "./Layout";
 import AddKaryawan from "./pages/AddKaryawan";
+import "react-datepicker/dist/react-datepicker.css";
+
+import "react-toastify/dist/ReactToastify.css";
+import EditKaryawan from "./pages/EditKaryawan";
+import About from "./pages/About";
 
 axios.defaults.withCredentials = true;
 
@@ -27,10 +32,18 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/editkaryawan/:id",
+    element: (
+      <Layout>
+        <EditKaryawan />
+      </Layout>
+    ),
+  },
+  {
     path: "/about",
     element: (
       <Layout>
-        <App />
+        <About />
       </Layout>
     ),
   },

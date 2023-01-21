@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const apiUrl = axios.create({
   baseURL: "http://localhost:5000",
@@ -35,6 +36,6 @@ export const updateKaryawan = async (karyawan: any) => {
   return await apiUrl.patch(`/karyawan/${karyawan._id}`, karyawan);
 };
 
-export const deleteKaryawan = async ({ id }: { id: any }) => {
+export const deleteKaryawan = async (id: any) => {
   return await apiUrl.delete(`/karyawan/${id}`, id);
 };

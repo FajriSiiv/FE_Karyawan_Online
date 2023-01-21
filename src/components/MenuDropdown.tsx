@@ -1,6 +1,30 @@
 import { Menu } from "@headlessui/react";
+import { deleteKaryawan } from "../api/api";
+import useStore from "../store/store";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export default function MenuDropdown() {
+export default function MenuDropdown({ idRow }: { idRow: any }) {
+  const { fetchData } = useStore();
+
+  const handleDelete = async (id: any) => {
+    Swal.fire({
+      title: "Apakah kamu ingin menghapus?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result: any) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        await deleteKaryawan(id);
+        fetchData();
+      }
+    });
+  };
+
   return (
     <Menu>
       <Menu.Button className="py-1 border-2 rounded-[3px]">
@@ -21,26 +45,15 @@ export default function MenuDropdown() {
       </Menu.Button>
       <Menu.Items className="absolute right-0 -top-5 flex flex-col bg-white border-2 p-2 rounded-md ">
         <Menu.Item>
-          {({ active }) => (
-            <a
-              className={`${active && "bg-blue-500"}`}
-              href="/account-settings"
-            >
-              Edit
-            </a>
-          )}
+          {({ active }) => <Link to={`/editkaryawan/${idRow}`}>Edit</Link>}
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
-            <a
-              className={`${active && "bg-blue-500"}`}
-              href="/account-settings"
-            >
-              Delete
-            </a>
+            <button onClick={() => handleDelete(idRow)}>Delete</button>
           )}
         </Menu.Item>
       </Menu.Items>
+      <ToastContainer />
     </Menu>
   );
 }
