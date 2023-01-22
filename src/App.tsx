@@ -11,9 +11,12 @@ function App() {
   useEffect(() => {
     fetchData();
 
-    if (karyawan) {
-      setPending(false);
-    }
+    const timeout = setTimeout(() => {
+      if (karyawan) {
+        setPending(false);
+      }
+    }, 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
