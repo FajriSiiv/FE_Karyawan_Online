@@ -6,9 +6,14 @@ import useStore from "./store/store";
 
 function App() {
   const { karyawan, fetchData } = useStore();
+  const [pending, setPending] = useState(true);
 
   useEffect(() => {
     fetchData();
+
+    if (karyawan) {
+      setPending(false);
+    }
   }, []);
 
   return (
@@ -18,6 +23,7 @@ function App() {
           columns={columns}
           data={karyawan}
           title={<TitleTable data={karyawan.length} />}
+          progressPending={pending}
           className="border-2 mt-5"
         />
       </div>
